@@ -8,9 +8,9 @@ export default function Footer() {
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
                 {/* About Section */}
                 <div>
-                    <h2 className="text-lg font-bold mb-4">About FE-BnB</h2>
+                    <h2 className="text-lg font-bold mb-4">About Hembnb</h2>
                     <p className="text-sm text-pink-700">
-                        FE-BnB is your go-to platform for managing properties and bookings with
+                        Hembnb is your go-to platform for managing properties and bookings with
                         ease. Whether you're a host or a guest, we make the process seamless
                         and enjoyable.
                     </p>
@@ -114,7 +114,7 @@ export default function Footer() {
 
             {/* Footer Bottom */}
             <div className="mt-8 border-t border-pink-200 pt-4 text-center text-sm text-pink-700">
-                © {currentYear} FE-BnB. All rights reserved.
+                © {currentYear} Hembnb. All rights reserved.
             </div>
         </footer>
     );

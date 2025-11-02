@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FE-BnB",
-  description: "Manage your properties and bookings with ease.",
+  title: "Hembnb",
+  description: "Find and book unique homestays around the world.",
 };
 
 export default function RootLayout({

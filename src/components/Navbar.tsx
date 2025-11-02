@@ -2,12 +2,16 @@ import Link from "next/link";
 
 export default function Navbar() {
     return (
-        <nav className="bg-pink-100 text-pink-800 py-4 shadow-md">
+        <nav className="bg-transparent text-pink-800 py-4 shadow-md">
             <div className="container mx-auto flex justify-between items-center px-6">
                 {/* Logo */}
                 <h1 className="text-2xl font-bold">
                     <Link href="/" className="hover:text-pink-600 transition-colors">
-                        FE-BnB
+                        <img
+                            src="https://i.imgur.com/eGjOPoQ.png"
+                            alt="Hembnb Logo"
+                            className="h-16 w-16 inline-block mr-2"
+                        />
                     </Link>
                 </h1>
 
