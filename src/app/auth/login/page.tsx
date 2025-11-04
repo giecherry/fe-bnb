@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { login } from "../../api/auth";
 import { saveToken } from "../../../utils/auth";
 import Input from "../../../components/Input";
@@ -13,22 +13,7 @@ const LoginPage: React.FC = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const sessionExpired = searchParams.get("sessionExpired");
 
-    useEffect(() => {
-        if (sessionExpired) {
-            toast.error("Your session has expired. Please log in again.", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                theme: "colored",
-            });
-        }
-    }, [sessionExpired]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -42,7 +27,7 @@ const LoginPage: React.FC = () => {
             if (role === "user") {
                 router.push("/bookings");
             } else if (role === "host") {
-                router.push("/properties");
+                router.push("/host");
             } else if (role === "admin") {
                 router.push("/admin");
             } else {

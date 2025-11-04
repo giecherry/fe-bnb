@@ -3,13 +3,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getPropertyById } from "../../api/properties";
+import { fetchUserRole } from "../../api/auth"; 
 import BookingForm from "../../../components/BookingForm";
+import Btn from "../../../components/Btn";
+import Link from "next/link";
 
 export default function PropertyDetailPage() {
-    const params = useParams(); // Unwrap params using useParams()
+    const params = useParams();
     const [property, setProperty] = useState<Property | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [role, setRole] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -29,11 +34,31 @@ export default function PropertyDetailPage() {
             }
         };
 
+        const fetchUserDetails = async () => {
+            try {
+                const userRole = await fetchUserRole();
+                setRole(userRole);
+
+                // Decode the token to get the user ID
+                const token = sessionStorage.getItem("token");
+                if (token) {
+                    const payload = JSON.parse(atob(token.split(".")[1]));
+                    setUserId(payload.sub);
+                }
+            } catch (err) {
+                console.error("Failed to fetch user role:", err);
+            }
+        };
+
         fetchProperty();
+        fetchUserDetails();
     }, [params.id]);
 
     if (error) return <p className="text-red-500">{error}</p>;
     if (!property) return <p>Loading...</p>;
+
+    // Check if the user is authorized to update the property
+    const canUpdateProperty = role === "admin" || (role === "host" && property.user_id === userId);
 
     // Main image and thumbnails
     const mainImage = property.images ? property.images[0] : null;
@@ -81,6 +106,17 @@ export default function PropertyDetailPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Update Property Button */}
+            {canUpdateProperty && (
+                <div className="mt-6">
+                    <Link href={`/properties/${property.id}/update`}>
+                        <Btn variant="primary">
+                            Update Property
+                        </Btn>
+                    </Link>
+                </div>
+            )}
 
             {/* Image Modal */}
             {selectedImage && (

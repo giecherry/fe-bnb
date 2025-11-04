@@ -23,7 +23,7 @@ export const login = async (data: { email: string; password: string }) => {
 export const fetchUserRole = async (): Promise<string | null> => {
     const token = getToken();
     if (!token) {
-        console.error("No token found. User is not authenticated.");
+        console.warn("No token found. User is not authenticated.");
         return null;
     }
 
@@ -43,7 +43,7 @@ export const fetchUserRole = async (): Promise<string | null> => {
         }
 
         const data = await response.json();
-        return data.role; 
+        return data.role;
     } catch (error) {
         console.error("Error fetching user role:", error);
         return null;

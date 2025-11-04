@@ -9,6 +9,7 @@ interface InputProps {
     label?: string;
     required?: boolean;
     disabled?: boolean;
+    name?: string;
 }
 
 export default function Input({
@@ -20,6 +21,7 @@ export default function Input({
     label,
     required = false,
     disabled = false,
+    name, 
 }: InputProps) {
     return (
         <div className="flex flex-col space-y-2">
@@ -40,6 +42,7 @@ export default function Input({
                 onChange={onChange}
                 required={required}
                 disabled={disabled}
+                name={name} 
                 className={`border border-[#ffcedc] rounded-md px-4 py-2 text-black placeholder-[#ffcedc] focus:outline-none focus:ring-2 focus:ring-[#ff8faf] focus:border-[#ff8faf] disabled:bg-[#ffcedc] disabled:cursor-not-allowed ${className}`}
             />
         </div>

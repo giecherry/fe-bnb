@@ -1,5 +1,6 @@
 "use client";
 
+import Link  from "next/link";
 import { removeToken } from "../utils/auth";
 
 export default function LogoutButton() {
@@ -9,12 +10,15 @@ export default function LogoutButton() {
     };
 
     return (
-        <span
-            onClick={handleLogout}
-            className="material-symbols-outlined text-[#ff8faf] text-2xl cursor-pointer hover:opacity-80 transition-opacity"
-            title="Logout"
-        >
-            logout
-        </span>
+        <Link href="/">
+            <button onClick={handleLogout}>
+                <span
+                    className="material-symbols-outlined text-[#ff8faf] text-2xl cursor-pointer hover:opacity-80 transition-opacity"
+                    title="Logout"
+                >
+                    logout
+                </span>
+            </button>
+        </Link>
     );
 }

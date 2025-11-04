@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchUserRole } from "../app/api/auth";
 
 export default function Navbar() {
-    const [role, setRole] = useState<string | null>(null);
+    const [role, setRole] = useState<string | null>("loading");
 
     useEffect(() => {
         const getUserRole = async () => {
@@ -65,7 +65,7 @@ export default function Navbar() {
                                 href="/admin"
                                 className="hover:text-[#ff8faf] transition-colors font-medium"
                             >
-                                Admin Dashboard
+                                Dashboard
                             </Link>
                         </li>
                     )}
@@ -75,7 +75,7 @@ export default function Navbar() {
                                 href="/host"
                                 className="hover:text-[#ff8faf] transition-colors font-medium"
                             >
-                                Host Dashboard
+                                Dashboard
                             </Link>
                         </li>
                     )}
@@ -84,17 +84,9 @@ export default function Navbar() {
                             <li>
                                 <Link
                                     href="/auth/login"
-                                    className="hover:text-[#ff8faf] transition-colors font-medium"
+                                    className="flex items-center"
                                 >
-                                    Login
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/auth/register"
-                                    className="hover:text-[#ff8faf] transition-colors font-medium"
-                                >
-                                    Register
+                                    <span className="material-symbols-outlined text-[#ff8faf] text-2xl cursor-pointer hover:opacity-80 transition-opacity">login</span>
                                 </Link>
                             </li>
                         </>
