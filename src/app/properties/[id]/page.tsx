@@ -74,15 +74,14 @@ export default function PropertyDetailPage() {
                         Are you sure you want to delete this property?
                     </p>
                     <div className="flex space-x-4">
-                        {/* Confirm Button */}
                         <button
                             className="px-6 py-2 bg-[#ff8faf] text-white rounded-md hover:bg-[#ffcedc] focus:ring-2 focus:ring-[#ffcedc]"
                             onClick={async () => {
-                                closeToast(); 
+                                closeToast();
                                 setIsDeleting(true);
                                 try {
                                     console.log(`Deleting property with ID: ${property.id}`);
-                                    await deleteProperty(property.id); 
+                                    await deleteProperty(property.id);
                                     toast.success("Property deleted successfully!", {
                                         className: "bg-[#ffcedc] text-[#ff4d6d]",
                                     });
@@ -99,10 +98,9 @@ export default function PropertyDetailPage() {
                         >
                             Confirm
                         </button>
-                        {/* Cancel Button */}
                         <button
                             className="px-6 py-2 border border-[#ff8faf] text-[#ff8faf] rounded-md hover:bg-[#ffcedc] hover:text-black focus:ring-2 focus:ring-[#ff8faf]"
-                            onClick={() => closeToast()} 
+                            onClick={() => closeToast()}
                         >
                             Cancel
                         </button>
@@ -110,11 +108,11 @@ export default function PropertyDetailPage() {
                 </div>
             ),
             {
-                autoClose: false, 
-                closeOnClick: false, 
-                draggable: false, 
-                position: "top-center", 
-                className: "bg-white shadow-lg rounded-lg p-6 border border-[#ffcedc]"
+                autoClose: false,
+                closeOnClick: false,
+                draggable: false,
+                position: "top-center",
+                className: "bg-white shadow-lg rounded-lg p-6 border border-[#ffcedc]",
             }
         );
     };
@@ -125,17 +123,15 @@ export default function PropertyDetailPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                 {/* Images Section */}
                 <div>
-                    {/* Main Image */}
                     {mainImage && (
                         <img
                             src={mainImage}
                             alt={`${property.name} main image`}
                             className="w-full h-96 object-cover rounded-md shadow-md mb-4"
-                            onClick={() => setSelectedImage(mainImage)} // Open modal
+                            onClick={() => setSelectedImage(mainImage)}
                         />
                     )}
 
-                    {/* Thumbnails */}
                     <div className="grid grid-cols-3 gap-4">
                         {otherImages.map((image, index) => (
                             <img
@@ -143,7 +139,7 @@ export default function PropertyDetailPage() {
                                 src={image}
                                 alt={`${property.name} image ${index + 1}`}
                                 className="w-full h-32 object-cover rounded-md shadow-md cursor-pointer"
-                                onClick={() => setSelectedImage(image)} // Open modal
+                                onClick={() => setSelectedImage(image)}
                             />
                         ))}
                     </div>
@@ -156,7 +152,12 @@ export default function PropertyDetailPage() {
                         <p className="text-lg text-gray-700">Location: {property.location}</p>
                         <p className="text-lg text-gray-700">Price per night: ${property.price_per_night}</p>
                     </div>
-                    {!canUpdateOrDeleteProperty && (
+                    {role === "host" && (
+                        <div className="mt-6 text-red-500 font-semibold">
+                            Hosts cannot book properties. Please register as a user to make bookings.
+                        </div>
+                    )}
+                    {role !== "host" && (
                         <div className="mt-6">
                             <BookingForm propertyId={property.id} pricePerNight={property.price_per_night} />
                         </div>
@@ -164,34 +165,26 @@ export default function PropertyDetailPage() {
                 </div>
             </div>
 
-            {/* Update and Delete Buttons */}
             {canUpdateOrDeleteProperty && (
                 <div className="mt-6 flex space-x-4">
                     <Link href={`/properties/${property.id}/update`}>
-                        <Btn variant="primary">
-                            Update Property
-                        </Btn>
+                        <Btn variant="primary">Update Property</Btn>
                     </Link>
-                    <Btn
-                        variant="danger"
-                        onClick={handleDeleteProperty}
-                        disabled={isDeleting}
-                    >
+                    <Btn variant="danger" onClick={handleDeleteProperty} disabled={isDeleting}>
                         {isDeleting ? "Deleting..." : "Delete Property"}
                     </Btn>
                 </div>
             )}
 
-            {/* Image Modal */}
             {selectedImage && (
                 <div
                     className="fixed inset-0 bg-[#ffffff37] backdrop-blur-sm flex items-center justify-center z-50"
-                    onClick={() => setSelectedImage(null)} // Close modal on background click
+                    onClick={() => setSelectedImage(null)}
                 >
                     <div className="relative">
                         <button
                             className="absolute top-2 right-2 text-black text-2xl"
-                            onClick={() => setSelectedImage(null)} // Close modal
+                            onClick={() => setSelectedImage(null)}
                         >
                             &times;
                         </button>
