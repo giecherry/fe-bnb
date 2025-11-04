@@ -1,6 +1,3 @@
-import Image from "next/image";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Btn from "../components/Btn";
 
 export default function Home() {

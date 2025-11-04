@@ -1,11 +1,11 @@
 import React from "react";
 
 interface BtnProps {
-    children: React.ReactNode; 
-    onClick?: () => void; 
+    children: React.ReactNode;
+    onClick?: () => void;
     className?: string;
-    type?: "button" | "submit" | "reset"; 
-    disabled?: boolean; 
+    type?: "button" | "submit" | "reset";
+    disabled?: boolean;
     variant?: "primary" | "secondary" | "outline";
 }
 
@@ -18,14 +18,14 @@ export default function Btn({
     variant = "primary",
 }: BtnProps) {
     const baseStyles =
-        "px-4 py-2 rounded-md font-medium focus:outline-none transition-colors duration-200";
+        "px-4 py-2 rounded-md font-bold focus:outline-none transition-colors duration-200";
     const variantStyles = {
         primary:
-            "bg-pink-500 text-white hover:bg-pink-600 focus:ring-2 focus:ring-pink-300",
+            "bg-[#ff8faf] text-white hover:bg-[#ffcedc] focus:ring-2 focus:ring-[#ffcedc]",
         secondary:
-            "bg-pink-100 text-pink-800 hover:bg-pink-200 focus:ring-2 focus:ring-pink-300",
+            "bg-[#ffcedc] text-[#ff8faf] hover:bg-[#ff8faf] hover:text-white focus:ring-2 focus:ring-[#ff8faf]",
         outline:
-            "border border-pink-500 text-pink-500 hover:bg-pink-50 focus:ring-2 focus:ring-pink-300",
+            "border border-[#ff8faf] text-[#ff8faf] hover:bg-[#ffcedc] focus:ring-2 focus:ring-[#ff8faf]",
     };
 
     return (

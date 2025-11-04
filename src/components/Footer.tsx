@@ -4,12 +4,12 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-pink-50 text-pink-800 py-10 shadow-md">
+        <footer className="bg-transparent text-black py-10 shadow-md">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
                 {/* About Section */}
                 <div>
                     <h2 className="text-lg font-bold mb-4">About Hembnb</h2>
-                    <p className="text-sm text-pink-700">
+                    <p className="text-sm text-[#ff8faf]">
                         Hembnb is your go-to platform for managing properties and bookings with
                         ease. Whether you're a host or a guest, we make the process seamless
                         and enjoyable.
@@ -23,7 +23,7 @@ export default function Footer() {
                         <li>
                             <Link
                                 href="/faq"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                             >
                                 FAQ
                             </Link>
@@ -31,7 +31,7 @@ export default function Footer() {
                         <li>
                             <Link
                                 href="/policies"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                             >
                                 Policies
                             </Link>
@@ -39,7 +39,7 @@ export default function Footer() {
                         <li>
                             <Link
                                 href="/contact"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                             >
                                 Contact Us
                             </Link>
@@ -47,7 +47,7 @@ export default function Footer() {
                         <li>
                             <Link
                                 href="/about"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                             >
                                 About Us
                             </Link>
@@ -55,14 +55,14 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                {/* Social Media & Contact */}
+                {/* Social Media */}
                 <div>
                     <h2 className="text-lg font-bold mb-4">Follow Us</h2>
                     <ul className="flex space-x-4">
                         <li>
                             <a
                                 href="#"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                                 aria-label="Facebook"
                             >
                                 <svg
@@ -78,7 +78,7 @@ export default function Footer() {
                         <li>
                             <a
                                 href="#"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                                 aria-label="Twitter"
                             >
                                 <svg
@@ -94,7 +94,7 @@ export default function Footer() {
                         <li>
                             <a
                                 href="#"
-                                className="hover:text-pink-600 transition-colors"
+                                className="hover:text-[#ff8faf] transition-colors"
                                 aria-label="Instagram"
                             >
                                 <svg
@@ -113,7 +113,7 @@ export default function Footer() {
             </div>
 
             {/* Footer Bottom */}
-            <div className="mt-8 border-t border-pink-200 pt-4 text-center text-sm text-pink-700">
+            <div className="mt-8 border-t border-[#ffcedc] pt-4 text-center text-sm text-[#ff8faf]">
                 © {currentYear} Hembnb. All rights reserved.
             </div>
         </footer>

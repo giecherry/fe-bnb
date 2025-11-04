@@ -1,14 +1,14 @@
 import React from "react";
 
 interface InputProps {
-    type?: string; 
-    placeholder?: string; 
-    value?: string; 
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
-    className?: string; 
-    label?: string; 
-    required?: boolean; 
-    disabled?: boolean; 
+    type?: string;
+    placeholder?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
+    label?: string;
+    required?: boolean;
+    disabled?: boolean;
 }
 
 export default function Input({
@@ -25,7 +25,7 @@ export default function Input({
         <div className="flex flex-col space-y-2">
             {label && (
                 <label
-                    className="text-sm font-medium text-pink-800"
+                    className="text-sm font-bold text-[#ff8faf]"
                     htmlFor={label.toLowerCase().replace(/\s+/g, "-")}
                 >
                     {label}
@@ -40,7 +40,7 @@ export default function Input({
                 onChange={onChange}
                 required={required}
                 disabled={disabled}
-                className={`border rounded-md px-4 py-2 text-pink-800 placeholder-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 disabled:bg-pink-100 disabled:cursor-not-allowed ${className}`}
+                className={`border border-[#ffcedc] rounded-md px-4 py-2 text-black placeholder-[#ffcedc] focus:outline-none focus:ring-2 focus:ring-[#ff8faf] focus:border-[#ff8faf] disabled:bg-[#ffcedc] disabled:cursor-not-allowed ${className}`}
             />
         </div>
     );

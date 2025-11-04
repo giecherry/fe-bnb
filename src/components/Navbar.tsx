@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export default function Navbar() {
     return (
-        <nav className="bg-transparent text-pink-800 py-4 shadow-md">
+        <nav className="bg-transparent text-black py-4 shadow-md">
             <div className="container mx-auto flex justify-between items-center px-6">
                 {/* Logo */}
                 <h1 className="text-2xl font-bold">
-                    <Link href="/" className="hover:text-pink-600 transition-colors">
+                    <Link href="/" className="hover:text-[#ff8faf] transition-colors">
                         <img
                             src="https://i.imgur.com/eGjOPoQ.png"
                             alt="Hembnb Logo"
@@ -20,7 +20,7 @@ export default function Navbar() {
                     <li>
                         <Link
                             href="/"
-                            className="hover:text-pink-600 transition-colors font-medium"
+                            className="hover:text-[#ff8faf] transition-colors font-medium"
                         >
                             Home
                         </Link>
@@ -28,7 +28,7 @@ export default function Navbar() {
                     <li>
                         <Link
                             href="/properties"
-                            className="hover:text-pink-600 transition-colors font-medium"
+                            className="hover:text-[#ff8faf] transition-colors font-medium"
                         >
                             Properties
                         </Link>
@@ -36,7 +36,7 @@ export default function Navbar() {
                     <li>
                         <Link
                             href="/bookings"
-                            className="hover:text-pink-600 transition-colors font-medium"
+                            className="hover:text-[#ff8faf] transition-colors font-medium"
                         >
                             Bookings
                         </Link>
@@ -44,7 +44,7 @@ export default function Navbar() {
                     <li>
                         <Link
                             href="/auth/login"
-                            className="hover:text-pink-600 transition-colors font-medium"
+                            className="hover:text-[#ff8faf] transition-colors font-medium"
                         >
                             Login
                         </Link>
@@ -52,7 +52,7 @@ export default function Navbar() {
                     <li>
                         <Link
                             href="/auth/register"
-                            className="hover:text-pink-600 transition-colors font-medium"
+                            className="hover:text-[#ff8faf] transition-colors font-medium"
                         >
                             Register
                         </Link>
