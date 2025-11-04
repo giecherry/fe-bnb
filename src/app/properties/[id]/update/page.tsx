@@ -16,7 +16,8 @@ export default function UpdatePropertyPage() {
         description: "",
         location: "",
         price_per_night: "",
-        images: [] as string[], // Store images as an array
+        images: [] as string[],
+        availability: false,
     });
     const [imageInput, setImageInput] = useState("");
     const [loading, setLoading] = useState(false);
@@ -39,6 +40,7 @@ export default function UpdatePropertyPage() {
                     location: data.location || "",
                     price_per_night: data.price_per_night?.toString() || "",
                     images: data.images || [], // Ensure images are an array
+                    availability: data.availability || false, // Set availability
                 });
             } catch (err: unknown) {
                 console.error("Failed to fetch property details:", err);
@@ -54,6 +56,10 @@ export default function UpdatePropertyPage() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handleToggleAvailability = () => {
+        setFormData((prev) => ({ ...prev, availability: !prev.availability }));
+    };
+
     const handleAddImage = () => {
         if (!imageInput.trim()) {
             setError("Please provide a valid image URL.");
@@ -64,8 +70,8 @@ export default function UpdatePropertyPage() {
             ...prev,
             images: [...prev.images, imageInput.trim()],
         }));
-        setImageInput(""); // Clear the input after adding
-        setError(null); // Clear any previous error
+        setImageInput(""); 
+        setError(null);
     };
 
     const handleRemoveImage = (index: number) => {
@@ -161,6 +167,25 @@ export default function UpdatePropertyPage() {
                         onChange={handleChange}
                         required
                     />
+
+                    {/* Availability Toggle */}
+                    <div className="flex items-center space-x-4">
+                        <label className="text-sm font-bold text-[#ff8faf]">Availability</label>
+                        <button
+                            type="button"
+                            onClick={handleToggleAvailability}
+                            className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ${formData.availability ? "bg-green-500" : "bg-gray-300"
+                                }`}
+                        >
+                            <div
+                                className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform ${formData.availability ? "translate-x-6" : "translate-x-0"
+                                    }`}
+                            ></div>
+                        </button>
+                        <span className="text-sm text-gray-700">
+                            {formData.availability ? "Available" : "Unavailable"}
+                        </span>
+                    </div>
 
                     {/* Images */}
                     <div className="flex flex-col space-y-2">
