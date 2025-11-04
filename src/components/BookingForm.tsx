@@ -108,7 +108,7 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
     return (
         <form onSubmit={handleSubmit} className="space-y-6 w-full">
             <div className="w-full">
-                <label className="block text-sm font-medium text-pink-800 mb-2">Check-in Date</label>
+                <label className="block text-sm font-semibold mb-2">Check-in Date</label>
                 <DatePicker
                     selected={checkInDate}
                     onChange={(date) => setCheckInDate(date)}
@@ -120,7 +120,7 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
                 />
             </div>
             <div className="w-full">
-                <label className="block text-sm font-medium text-pink-800 mb-2">Check-out Date</label>
+                <label className="block text-sm font-semibold mb-2">Check-out Date</label>
                 <DatePicker
                     selected={checkOutDate}
                     onChange={(date) => setCheckOutDate(date)}
@@ -137,7 +137,7 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
                 </p>
             </div>
             {validationErrors.length > 0 && (
-                <div className="text-pink-800 text-sm space-y-1">
+                <div className="text-sm space-y-1">
                     {validationErrors.map((err, index) => (
                         <p key={index}>{err}</p>
                     ))}

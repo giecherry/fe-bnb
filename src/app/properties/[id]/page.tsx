@@ -147,7 +147,7 @@ export default function PropertyDetailPage() {
 
                 {/* Property Details and Booking Form */}
                 <div className="flex flex-col justify-between w-full md:w-[90%] mx-auto">
-                    <div className="space-y-4">
+                    <div className="space-y-4 ">
                         <p className="text-lg text-gray-700">{property.description}</p>
                         <p className="text-lg text-gray-700">Location: {property.location}</p>
                         <p className="text-lg text-gray-700">Price per night: ${property.price_per_night}</p>

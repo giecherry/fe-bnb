@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../app/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "700"], 
 });
 
 export const metadata: Metadata = {
@@ -31,9 +27,13 @@ export default function RootLayout({
       <head>
         <title>Hembnb</title>
         <link rel="icon" href="https://i.imgur.com/eGjOPoQ.png" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-pink-50 text-pink-800`}
+        className={`${montserrat.variable} antialiased bg-pink-50 text-[#ff8faf]`}
       >
         {/* Header */}
         <Navbar />
@@ -48,7 +48,7 @@ export default function RootLayout({
 
         {/* Footer */}
         <Footer />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=login,logout" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=login,logout,star" />
       </body>
     </html>
   );
