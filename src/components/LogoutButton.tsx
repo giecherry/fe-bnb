@@ -9,8 +9,12 @@ export default function LogoutButton() {
     };
 
     return (
-        <button onClick={handleLogout} className="bg-[#ff8faf] text-white px-4 py-2 rounded-md">
-            Logout
-        </button>
+        <span
+            onClick={handleLogout}
+            className="material-symbols-outlined text-[#ff8faf] text-2xl cursor-pointer hover:opacity-80 transition-opacity"
+            title="Logout"
+        >
+            logout
+        </span>
     );
 }
