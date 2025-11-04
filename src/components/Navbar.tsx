@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LogoutButton from "./LogoutButton";
 
 export default function Navbar() {
     return (
@@ -56,6 +57,9 @@ export default function Navbar() {
                         >
                             Register
                         </Link>
+                    </li>
+                    <li>
+                        <LogoutButton />
                     </li>
                 </ul>
             </div>

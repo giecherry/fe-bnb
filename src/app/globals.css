@@ -24,3 +24,86 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.react-datepicker {
+  font-family: "Arial", sans-serif !important;
+  border: 1px solid #ffcedc !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+  background-color: #fff !important;
+  width: 100% !important;
+  /* Ensure the DatePicker takes full width */
+}
+
+.react-datepicker__input-container input {
+  width: 100% !important;
+  /* Force the input to take full width */
+  border: 1px solid #ffcedc !important;
+  border-radius: 12px !important;
+  padding: 8px 16px !important;
+  font-size: 1rem !important;
+  color: #171717 !important;
+  background-color: #fff !important;
+  outline: none !important;
+  transition: border-color 0.3s ease-in-out !important;
+}
+
+.react-datepicker__input-container input:focus {
+  border-color: #ff8faf !important;
+  box-shadow: 0 0 0 2px #ff8faf !important;
+}
+
+.react-datepicker__header {
+  background-color: #ff8faf !important;
+  color: white !important;
+  border-bottom: 1px solid #ffcedc !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #ffcedc !important;
+  color: #ff8faf !important;
+  border-radius: 50% !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #ffcedc !important;
+  color: #ff8faf !important;
+  border-radius: 50% !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: #ff8faf !important;
+  color: white !important;
+  border-radius: 50% !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+.react-datepicker__navigation {
+  background-color: #ff8faf !important;
+  border-radius: 50% !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.react-datepicker__navigation:hover {
+  background-color: #ffcedc !important;
+}
+
+.react-datepicker__day-name {
+  color: #ff8faf;
+  font-weight: bold;
+}
+
+.react-datepicker-wrapper {
+  width: 100% !important;
+  display: block !important;
+}

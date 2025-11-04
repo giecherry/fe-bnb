@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import "../app/globals.css"; // Import global styles
+import "../app/globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +35,12 @@ export default function RootLayout({
         <Navbar />
 
         {/* Main Content */}
-        <main className="min-h-[calc(100vh-160px)]">{children}</main>
+        <main className="min-h-[calc(100vh-160px)] bg-pink-50">
+          {children}
+        </main>
+
+        {/* Toast Notifications */}
+        <ToastContainer />
 
         {/* Footer */}
         <Footer />
