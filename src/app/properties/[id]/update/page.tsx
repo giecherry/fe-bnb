@@ -1,24 +1,53 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Btn from "../../../components/Btn";
-import Input from "../../../components/Input";
-import { isValidUrl } from "../../../utils/general";
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { getPropertyById } from "../../../api/properties";
+import { apiRequest } from "../../../../utils/auth";
+import Input from "../../../../components/Input";
+import Btn from "../../../../components/Btn";
+import { toast } from "react-toastify";
 
-export default function AddPropertyPage() {
+export default function UpdatePropertyPage() {
+    const params = useParams();
     const router = useRouter();
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        price_per_night: "",
         location: "",
-        images: [] as string[],
-        availability: true,
+        price_per_night: "",
+        images: [] as string[], // Store images as an array
     });
     const [imageInput, setImageInput] = useState("");
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchProperty = async () => {
+            const propertyId = Array.isArray(params.id) ? params.id[0] : params.id;
+
+            if (!propertyId) {
+                setError("Property ID is missing.");
+                return;
+            }
+
+            try {
+                const data = await getPropertyById(propertyId);
+                setFormData({
+                    name: data.name || "",
+                    description: data.description || "",
+                    location: data.location || "",
+                    price_per_night: data.price_per_night?.toString() || "",
+                    images: data.images || [], // Ensure images are an array
+                });
+            } catch (err: unknown) {
+                console.error("Failed to fetch property details:", err);
+                setError("Something went wrong. Please try again.");
+            }
+        };
+
+        fetchProperty();
+    }, [params.id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -26,8 +55,8 @@ export default function AddPropertyPage() {
     };
 
     const handleAddImage = () => {
-        if (!isValidUrl(imageInput)) {
-            setError("Please provide a valid URL.");
+        if (!imageInput.trim()) {
+            setError("Please provide a valid image URL.");
             return;
         }
 
@@ -35,8 +64,8 @@ export default function AddPropertyPage() {
             ...prev,
             images: [...prev.images, imageInput.trim()],
         }));
-        setImageInput("");
-        setError(null);
+        setImageInput(""); // Clear the input after adding
+        setError(null); // Clear any previous error
     };
 
     const handleRemoveImage = (index: number) => {
@@ -52,48 +81,39 @@ export default function AddPropertyPage() {
         setError(null);
 
         try {
-            const token = sessionStorage.getItem("token");
-            if (!token) {
-                throw new Error("Unauthorized: No token provided.");
-            }
+            const propertyId = Array.isArray(params.id) ? params.id[0] : params.id;
 
-            const payload = {
-                ...formData,
-                price_per_night: parseFloat(formData.price_per_night),
-                availability: true,
-            };
-
-            const response = await fetch(`${process.env.BACKEND_BASE_URL || "http://localhost:1004"}/properties`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(payload),
+            const response = await apiRequest(`${process.env.BACKEND_BASE_URL || "http://localhost:1004"}/properties/${propertyId}`, {
+                method: "PATCH",
+                body: JSON.stringify({
+                    ...formData,
+                    price_per_night: parseFloat(formData.price_per_night),
+                }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || "Failed to create property.");
+                throw new Error(errorData.error || "Failed to update property.");
             }
 
-            router.push("/host");
+            toast.success("Property updated successfully!");
+            router.push(`/properties/${propertyId}`);
         } catch (err: unknown) {
-            console.error("Error creating property:", err);
-            if (err instanceof Error) {
-                setError(err.message);
-            } else {
-                setError("Something went wrong. Please try again.");
-            }
+            console.error("Failed to update property:", err);
+            setError((err as Error).message || "Something went wrong. Please try again.");
+            toast.error(error || "Failed to update property.");
         } finally {
             setLoading(false);
         }
     };
 
+    if (error) return <p className="text-red-500">{error}</p>;
+    if (!formData.name) return <p>Loading...</p>;
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-pink-50">
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold text-black mb-6">Add a New Property</h1>
+                <h1 className="text-2xl font-bold text-black mb-6">Update Property</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Property Name */}
                     <Input
@@ -186,12 +206,9 @@ export default function AddPropertyPage() {
                         </div>
                     </div>
 
-                    {/* Error Message */}
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
-
                     {/* Submit Button */}
                     <Btn type="submit" variant="primary" className="w-full">
-                        {loading ? "Adding Property..." : "Add Property"}
+                        {loading ? "Updating Property..." : "Update Property"}
                     </Btn>
                 </form>
             </div>

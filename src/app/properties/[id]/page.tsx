@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getPropertyById } from "../../api/properties";
-import { fetchUserRole } from "../../api/auth"; 
+import { fetchUserRole } from "../../api/auth";
 import BookingForm from "../../../components/BookingForm";
 import Btn from "../../../components/Btn";
 import Link from "next/link";
@@ -101,9 +101,11 @@ export default function PropertyDetailPage() {
                         <p className="text-lg text-gray-700">Location: {property.location}</p>
                         <p className="text-lg text-gray-700">Price per night: ${property.price_per_night}</p>
                     </div>
-                    <div className="mt-6">
-                        <BookingForm propertyId={property.id} pricePerNight={property.price_per_night} />
-                    </div>
+                    {!canUpdateProperty && (
+                        <div className="mt-6">
+                            <BookingForm propertyId={property.id} pricePerNight={property.price_per_night} />
+                        </div>
+                    )}
                 </div>
             </div>
 

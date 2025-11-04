@@ -1,24 +1,24 @@
 "use client";
 
-import Link  from "next/link";
+import { useRouter } from "next/navigation";
 import { removeToken } from "../utils/auth";
 
 export default function LogoutButton() {
+    const router = useRouter();
+
     const handleLogout = () => {
         removeToken();
-        window.location.href = "/";
+        router.push("/"); 
     };
 
     return (
-        <Link href="/">
-            <button onClick={handleLogout}>
-                <span
-                    className="material-symbols-outlined text-[#ff8faf] text-2xl cursor-pointer hover:opacity-80 transition-opacity"
-                    title="Logout"
-                >
-                    logout
-                </span>
-            </button>
-        </Link>
+        <button onClick={handleLogout}>
+            <span
+                className="material-symbols-outlined text-[#ff8faf] text-2xl cursor-pointer hover:opacity-80 transition-opacity"
+                title="Logout"
+            >
+                logout
+            </span>
+        </button>
     );
 }
