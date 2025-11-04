@@ -13,3 +13,14 @@ export const getPropertyById = async (id: string): Promise<Property> => {
     return response.json();
 };
 
+export const deleteProperty = async (id: string): Promise<void> => {
+    const response = await apiRequest(`${API_URL}/properties/${id}`, {
+        method: "DELETE",
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to delete property");
+    }
+};
+

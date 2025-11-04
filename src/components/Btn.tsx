@@ -6,7 +6,7 @@ interface BtnProps {
     className?: string;
     type?: "button" | "submit" | "reset";
     disabled?: boolean;
-    variant?: "primary" | "secondary" | "outline";
+    variant?: "primary" | "secondary" | "outline" | "danger"; 
 }
 
 export default function Btn({
@@ -26,6 +26,8 @@ export default function Btn({
             "bg-[#ffcedc] text-[#ff8faf] hover:bg-[#ff8faf] hover:text-white focus:ring-2 focus:ring-[#ff8faf]",
         outline:
             "border border-[#ff8faf] text-[#ff8faf] hover:bg-[#ffcedc] focus:ring-2 focus:ring-[#ff8faf]",
+        danger:
+            "border border-[#ff4d6d] text-[#ff4d6d] hover:bg-[#ffcedc] hover:text-black focus:ring-2 focus:ring-[#ff8faf]",
     };
 
     return (

@@ -195,7 +195,7 @@ export default function UpdatePropertyPage() {
                                     {/* Delete Button */}
                                     <Btn
                                         type="button"
-                                        variant="outline"
+                                        variant="danger"
                                         className="w-24"
                                         onClick={() => handleRemoveImage(index)}
                                     >

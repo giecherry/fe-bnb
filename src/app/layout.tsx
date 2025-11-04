@@ -28,6 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Hembnb</title>
+        <link rel="icon" href="https://i.imgur.com/eGjOPoQ.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-pink-50 text-pink-800`}
       >

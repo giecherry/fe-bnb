@@ -1,20 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { getPropertyById } from "../../api/properties";
+import { useParams, useRouter } from "next/navigation";
+import { getPropertyById, deleteProperty } from "../../api/properties";
 import { fetchUserRole } from "../../api/auth";
 import BookingForm from "../../../components/BookingForm";
 import Btn from "../../../components/Btn";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function PropertyDetailPage() {
     const params = useParams();
+    const router = useRouter();
     const [property, setProperty] = useState<Property | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [role, setRole] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -39,7 +42,6 @@ export default function PropertyDetailPage() {
                 const userRole = await fetchUserRole();
                 setRole(userRole);
 
-                // Decode the token to get the user ID
                 const token = sessionStorage.getItem("token");
                 if (token) {
                     const payload = JSON.parse(atob(token.split(".")[1]));
@@ -57,12 +59,65 @@ export default function PropertyDetailPage() {
     if (error) return <p className="text-red-500">{error}</p>;
     if (!property) return <p>Loading...</p>;
 
-    // Check if the user is authorized to update the property
-    const canUpdateProperty = role === "admin" || (role === "host" && property.user_id === userId);
+    const canUpdateOrDeleteProperty = role === "admin" || (role === "host" && property.user_id === userId);
 
-    // Main image and thumbnails
     const mainImage = property.images ? property.images[0] : null;
     const otherImages = property.images ? property.images.slice(1) : [];
+
+    const handleDeleteProperty = async () => {
+        if (!property) return;
+
+        toast(
+            ({ closeToast }) => (
+                <div className="flex flex-col items-center space-y-4 p-4">
+                    <p className="text-lg font-semibold text-[#ff4d6d]">
+                        Are you sure you want to delete this property?
+                    </p>
+                    <div className="flex space-x-4">
+                        {/* Confirm Button */}
+                        <button
+                            className="px-6 py-2 bg-[#ff8faf] text-white rounded-md hover:bg-[#ffcedc] focus:ring-2 focus:ring-[#ffcedc]"
+                            onClick={async () => {
+                                closeToast(); 
+                                setIsDeleting(true);
+                                try {
+                                    console.log(`Deleting property with ID: ${property.id}`);
+                                    await deleteProperty(property.id); 
+                                    toast.success("Property deleted successfully!", {
+                                        className: "bg-[#ffcedc] text-[#ff4d6d]",
+                                    });
+                                    router.push("/properties");
+                                } catch (err) {
+                                    console.error("Failed to delete property:", err);
+                                    toast.error("Failed to delete property. Please try again.", {
+                                        className: "bg-[#ffcedc] text-[#ff4d6d]",
+                                    });
+                                } finally {
+                                    setIsDeleting(false);
+                                }
+                            }}
+                        >
+                            Confirm
+                        </button>
+                        {/* Cancel Button */}
+                        <button
+                            className="px-6 py-2 border border-[#ff8faf] text-[#ff8faf] rounded-md hover:bg-[#ffcedc] hover:text-black focus:ring-2 focus:ring-[#ff8faf]"
+                            onClick={() => closeToast()} 
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            ),
+            {
+                autoClose: false, 
+                closeOnClick: false, 
+                draggable: false, 
+                position: "top-center", 
+                className: "bg-white shadow-lg rounded-lg p-6 border border-[#ffcedc]"
+            }
+        );
+    };
 
     return (
         <div className="container mx-auto p-6 relative">
@@ -101,7 +156,7 @@ export default function PropertyDetailPage() {
                         <p className="text-lg text-gray-700">Location: {property.location}</p>
                         <p className="text-lg text-gray-700">Price per night: ${property.price_per_night}</p>
                     </div>
-                    {!canUpdateProperty && (
+                    {!canUpdateOrDeleteProperty && (
                         <div className="mt-6">
                             <BookingForm propertyId={property.id} pricePerNight={property.price_per_night} />
                         </div>
@@ -109,14 +164,21 @@ export default function PropertyDetailPage() {
                 </div>
             </div>
 
-            {/* Update Property Button */}
-            {canUpdateProperty && (
-                <div className="mt-6">
+            {/* Update and Delete Buttons */}
+            {canUpdateOrDeleteProperty && (
+                <div className="mt-6 flex space-x-4">
                     <Link href={`/properties/${property.id}/update`}>
                         <Btn variant="primary">
                             Update Property
                         </Btn>
                     </Link>
+                    <Btn
+                        variant="danger"
+                        onClick={handleDeleteProperty}
+                        disabled={isDeleting}
+                    >
+                        {isDeleting ? "Deleting..." : "Delete Property"}
+                    </Btn>
                 </div>
             )}
 
