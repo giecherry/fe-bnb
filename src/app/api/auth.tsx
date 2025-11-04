@@ -1,3 +1,5 @@
+import { getToken } from "../../utils/auth";
+
 const API_URL = process.env.BACKEND_BASE_URL || 'http://localhost:1004';
 
 export const login = async (data: { email: string; password: string }) => {
@@ -17,3 +19,34 @@ export const login = async (data: { email: string; password: string }) => {
 
     return response.json();
 };
+
+export const fetchUserRole = async (): Promise<string | null> => {
+    const token = getToken();
+    if (!token) {
+        console.error("No token found. User is not authenticated.");
+        return null;
+    }
+
+    try {
+        const response = await fetch(`${process.env.BACKEND_BASE_URL || "http://localhost:1004"}/auth/me`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+        });
+
+        if (!response.ok) {
+            console.error("Failed to fetch user role:", response.statusText);
+            return null;
+        }
+
+        const data = await response.json();
+        return data.role; 
+    } catch (error) {
+        console.error("Error fetching user role:", error);
+        return null;
+    }
+};
+
