@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Input from "../../../components/Input";
 import Btn from "../../../components/Btn";
 
-const API_URL = process.env.BACKEND_BASE_URL || "http://localhost:1004";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.BACKEND_BASE_URL || 'http://localhost:1004';
 
 const RegisterPage = () => {
     const [email, setEmail] = useState("");

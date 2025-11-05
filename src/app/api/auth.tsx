@@ -1,6 +1,6 @@
 import { getToken } from "../../utils/auth";
 
-const API_URL = process.env.BACKEND_BASE_URL || 'http://localhost:1004';
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.BACKEND_BASE_URL || 'http://localhost:1004';
 
 export const login = async (data: { email: string; password: string }) => {
     const response = await fetch(`${API_URL}/auth/login`, {
