@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["400", "500", "700"], 
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -31,6 +31,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap"
           rel="stylesheet"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
       </head>
       <body
         className={`${montserrat.variable} antialiased bg-pink-50 text-[#ff8faf]`}
@@ -48,7 +52,6 @@ export default function RootLayout({
 
         {/* Footer */}
         <Footer />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=login,logout,star" />
       </body>
     </html>
   );

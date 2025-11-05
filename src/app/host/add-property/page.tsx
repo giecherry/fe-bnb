@@ -6,6 +6,8 @@ import Btn from "../../../components/Btn";
 import Input from "../../../components/Input";
 import { isValidUrl } from "../../../utils/general";
 
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.BACKEND_BASE_URL || 'http://localhost:1004';
+
 export default function AddPropertyPage() {
     const router = useRouter();
     const [formData, setFormData] = useState({
@@ -63,7 +65,7 @@ export default function AddPropertyPage() {
                 availability: true,
             };
 
-            const response = await fetch(`${process.env.BACKEND_BASE_URL || "http://localhost:1004"}/properties`, {
+            const response = await fetch(`${API_URL}/properties`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

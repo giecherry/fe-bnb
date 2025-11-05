@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getUserBookings } from "../api/bookings";
 import { getToken } from "../../utils/auth";
+import Loading from "../../components/Loading"; // Import the Loading component
 
 export default function UserPage() {
     const [bookings, setBookings] = useState<Booking[] | null>(null);
@@ -42,7 +43,11 @@ export default function UserPage() {
     }, []);
 
     if (loading) {
-        return <p className="text-center text-lg text-gray-600">Loading your profile...</p>;
+        return (
+            <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+                <Loading message="Loading your profile..." />
+            </div>
+        );
     }
 
     if (error) {

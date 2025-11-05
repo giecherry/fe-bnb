@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getAllProperties } from "../api/properties";
 import { getToken } from "../../utils/auth";
-import Btn from "../../components/Btn"; 
+import Btn from "../../components/Btn";
+import Loading from "../../components/Loading";
 
 export default function HostDashboard() {
     const [properties, setProperties] = useState<Property[] | null>(null);
@@ -29,7 +30,6 @@ export default function HostDashboard() {
                 const hostProperties = allProperties.filter(
                     (property) => property.user_id === userId
                 );
-                        console.log(allProperties);
 
                 setProperties(hostProperties);
             } catch (err: unknown) {
@@ -47,6 +47,14 @@ export default function HostDashboard() {
         fetchHostProperties();
     }, []);
 
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+                <Loading message="Loading your properties..." />
+            </div>
+        );
+    }
+
     return (
         <div className="max-w-6xl mx-auto p-6 bg-pink-50 text-pink-800 rounded-lg">
             <div className="flex justify-between items-center mb-6">
@@ -56,14 +64,12 @@ export default function HostDashboard() {
                 </Link>
             </div>
 
-            {loading && (
-                <p className="text-center text-lg text-gray-600">Loading your properties...</p>
-            )}
-
             {error && <p className="text-center text-red-500">{error}</p>}
 
             {!loading && !error && (!properties || properties.length === 0) && (
-                <p className="text-center text-lg text-gray-600">You have no properties.</p>
+                <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] text-2xl">
+                    <p className="mb-4">You haven't added any properties yet!</p>
+                </div>
             )}
 
             {!loading && !error && properties && properties.length > 0 && (

@@ -16,6 +16,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                     src={property.images[0]}
                     alt={`${property.name} image`}
                     className="w-full h-40 object-cover rounded-md mb-4"
+                    onLoad={(e) => (e.currentTarget.style.opacity = "1")} 
                 />
             )}
             <h2 className="text-lg font-bold text-[#000000]">{property.name}</h2>

@@ -8,6 +8,7 @@ import BookingForm from "../../../components/BookingForm";
 import Btn from "../../../components/Btn";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import Loading from "../../../components/Loading";
 
 export default function PropertyDetailPage() {
     const params = useParams();
@@ -18,6 +19,7 @@ export default function PropertyDetailPage() {
     const [role, setRole] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -25,6 +27,7 @@ export default function PropertyDetailPage() {
 
             if (!propertyId) {
                 setError("Property ID is missing.");
+                setIsLoading(false);
                 return;
             }
 
@@ -34,6 +37,8 @@ export default function PropertyDetailPage() {
             } catch (err: unknown) {
                 console.error("Failed to fetch property details:", err);
                 setError("Something went wrong. Please try again.");
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -56,8 +61,15 @@ export default function PropertyDetailPage() {
         fetchUserDetails();
     }, [params.id]);
 
+    if (isLoading || !property) {
+        return (
+            <div className="flex items-center justify-center h-[calc(100vh-200px)]"> 
+                <Loading message="Loading property details..." />
+            </div>
+        );
+    }
+
     if (error) return <p className="text-red-500">{error}</p>;
-    if (!property) return <p>Loading...</p>;
 
     const canUpdateOrDeleteProperty = role === "admin" || (role === "host" && property.user_id === userId);
 
@@ -134,7 +146,8 @@ export default function PropertyDetailPage() {
                         <img
                             src={mainImage}
                             alt={`${property.name} main image`}
-                            className="w-full h-96 object-cover rounded-md shadow-md mb-4"
+                            className="w-full h-96 object-cover rounded-md shadow-md mb-4 opacity-0 transition-opacity duration-500 cursor-pointer"
+                            onLoad={(e) => (e.currentTarget.style.opacity = "1")} 
                             onClick={() => setSelectedImage(mainImage)}
                         />
                     )}
@@ -145,7 +158,8 @@ export default function PropertyDetailPage() {
                                 key={index}
                                 src={image}
                                 alt={`${property.name} image ${index + 1}`}
-                                className="w-full h-32 object-cover rounded-md shadow-md cursor-pointer"
+                                className="w-full h-32 object-cover rounded-md shadow-md cursor-pointer opacity-0 transition-opacity duration-500"
+                                onLoad={(e) => (e.currentTarget.style.opacity = "1")}
                                 onClick={() => setSelectedImage(image)}
                             />
                         ))}
@@ -169,7 +183,7 @@ export default function PropertyDetailPage() {
                             <BookingForm
                                 propertyId={property.id}
                                 pricePerNight={property.price_per_night}
-                                onBookingSuccess={handleBookingSuccess} 
+                                onBookingSuccess={handleBookingSuccess}
                             />
                         </div>
                     )}
