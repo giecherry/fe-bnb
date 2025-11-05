@@ -8,6 +8,9 @@ import Input from "../../../../components/Input";
 import Btn from "../../../../components/Btn";
 import { toast } from "react-toastify";
 
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.BACKEND_BASE_URL || 'http://localhost:1004';
+
+
 export default function UpdatePropertyPage() {
     const params = useParams();
     const router = useRouter();
@@ -89,7 +92,7 @@ export default function UpdatePropertyPage() {
         try {
             const propertyId = Array.isArray(params.id) ? params.id[0] : params.id;
 
-            const response = await apiRequest(`${process.env.BACKEND_BASE_URL || "http://localhost:1004"}/properties/${propertyId}`, {
+            const response = await apiRequest(`${API_URL}/properties/${propertyId}`, {
                 method: "PATCH",
                 body: JSON.stringify({
                     ...formData,

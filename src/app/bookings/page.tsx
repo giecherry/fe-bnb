@@ -23,7 +23,6 @@ export default function UserPage() {
 
                 const payload = JSON.parse(atob(token.split(".")[1]));
                 const userId = payload.sub;
-                console.log("Extracted User ID:", userId);
 
                 const data = await getUserBookings(userId);
                 setBookings(data);

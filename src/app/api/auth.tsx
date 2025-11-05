@@ -28,7 +28,7 @@ export const fetchUserRole = async (): Promise<string | null> => {
     }
 
     try {
-        const response = await fetch(`${process.env.BACKEND_BASE_URL || "http://localhost:1004"}/auth/me`, {
+        const response = await fetch(`${API_URL}/auth/me`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

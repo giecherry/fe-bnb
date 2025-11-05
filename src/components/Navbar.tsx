@@ -16,7 +16,6 @@ export default function Navbar() {
         };
         getUserRole();
     }, []);
-
     const isActive = (path: string) => pathname === path;
 
     return (
