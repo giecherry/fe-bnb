@@ -117,6 +117,13 @@ export default function PropertyDetailPage() {
         );
     };
 
+    const handleBookingSuccess = () => {
+        toast.success("Thanks for booking! You will receive an email confirmation shortly.", {
+            position: "top-center",
+            className: "bg-[#ffcedc] text-[#ff4d6d]",
+        });
+    };
+
     return (
         <div className="container mx-auto p-6 relative">
             <h1 className="text-3xl font-bold text-pink-800 mb-6">{property.name}</h1>
@@ -159,7 +166,11 @@ export default function PropertyDetailPage() {
                     )}
                     {role !== "host" && (
                         <div className="mt-6">
-                            <BookingForm propertyId={property.id} pricePerNight={property.price_per_night} />
+                            <BookingForm
+                                propertyId={property.id}
+                                pricePerNight={property.price_per_night}
+                                onBookingSuccess={handleBookingSuccess} 
+                            />
                         </div>
                     )}
                 </div>

@@ -42,8 +42,8 @@ export default function UpdatePropertyPage() {
                     description: data.description || "",
                     location: data.location || "",
                     price_per_night: data.price_per_night?.toString() || "",
-                    images: data.images || [], // Ensure images are an array
-                    availability: data.availability || false, // Set availability
+                    images: data.images || [], 
+                    availability: data.availability || false, 
                 });
             } catch (err: unknown) {
                 console.error("Failed to fetch property details:", err);
@@ -120,8 +120,8 @@ export default function UpdatePropertyPage() {
     if (!formData.name) return <p>Loading...</p>;
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-pink-50">
-            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-pink-50 p-4">
+            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-xl">
                 <h1 className="text-2xl font-bold text-black mb-6">Update Property</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Property Name */}
@@ -218,7 +218,7 @@ export default function UpdatePropertyPage() {
                                     <img
                                         src={url}
                                         alt={`Preview ${index + 1}`}
-                                        className="w-24 h-24 object-cover rounded-md border border-gray-300"
+                                        className="w-32 h-24 object-cover rounded-md border border-gray-300"
                                     />
                                     {/* Delete Button */}
                                     <Btn

@@ -3,15 +3,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createBooking } from "../app/api/bookings";
 import { getToken } from "../utils/auth";
+import Btn from "./Btn";
 
 interface BookingFormProps {
     propertyId: string;
     pricePerNight: number;
+    onBookingSuccess?: () => void; 
 }
 
-export default function BookingForm({ propertyId, pricePerNight }: BookingFormProps) {
+export default function BookingForm({ propertyId, pricePerNight, onBookingSuccess }: BookingFormProps) {
     const [checkInDate, setCheckInDate] = useState<Date | null>(null);
     const [checkOutDate, setCheckOutDate] = useState<Date | null>(null);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
@@ -19,12 +22,11 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
         if (!checkInDate || !checkOutDate) return 0;
         if (isNaN(checkInDate.getTime()) || isNaN(checkOutDate.getTime())) return 0;
         const diffInTime = checkOutDate.getTime() - checkInDate.getTime();
-        if (diffInTime <= 0) return 0; 
+        if (diffInTime <= 0) return 0;
         const diffInDays = Math.ceil(diffInTime / (1000 * 3600 * 24));
         return diffInDays * pricePerNight;
     };
 
-    // Dynamic validation using useEffect
     useEffect(() => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -55,9 +57,10 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
         }
 
         setError(null);
-    }, [checkInDate, checkOutDate]); 
+    }, [checkInDate, checkOutDate]);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
         setError(null);
         setValidationErrors([]);
 
@@ -98,10 +101,15 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
             }
             setCheckInDate(null);
             setCheckOutDate(null);
-            alert("Thanks for booking! You will receive an email confirmation shortly.");
+
+            if (onBookingSuccess) {
+                onBookingSuccess();
+            }
         } catch (err: unknown) {
             console.error("Unexpected Error:", err);
             setError("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -128,7 +136,7 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
                     dateFormat="yyyy-MM-dd"
                     placeholderText="Select a date"
                     required
-                    minDate={new Date()} // Restrict past dates
+                    minDate={new Date()} 
                 />
             </div>
             <div className="w-full">
@@ -144,12 +152,9 @@ export default function BookingForm({ propertyId, pricePerNight }: BookingFormPr
                 </div>
             )}
             {error && <p className="text-red-500">{error}</p>}
-            <button
-                type="submit"
-                className="bg-[#ff8faf] text-white px-4 py-3 w-full rounded-md hover:bg-[#ffcedc] transition-all font-medium"
-            >
-                Book Now
-            </button>
+            <Btn type="submit" variant="primary" className="w-full">
+                {loading ? "Booking..." : `Book for $${pricePerNight}/night`}
+            </Btn>
         </form>
     );
 }

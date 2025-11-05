@@ -66,9 +66,6 @@ export default function UserPage() {
                         <strong>Email:</strong> {bookings[0].user.email}
                     </p>
                     <p className="text-lg">
-                        <strong>Role:</strong> {bookings[0].user.role}
-                    </p>
-                    <p className="text-lg">
                         <strong>Account Created:</strong>{" "}
                         {new Date(bookings[0].user.created_at).toLocaleDateString()}
                     </p>

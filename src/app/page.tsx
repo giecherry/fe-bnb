@@ -5,25 +5,6 @@ import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 
 export default function Home() {
-  const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const properties = await getAllProperties();
-        const shuffled = properties.sort(() => 0.5 - Math.random());
-        setFeaturedProperties(shuffled.slice(0, 8)); // Display 8 properties for a 4x8 grid
-      } catch (error) {
-        console.error("Failed to fetch properties", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProperties();
-  }, []);
-
   const testimonials = [
     {
       id: 1,
@@ -69,6 +50,32 @@ export default function Home() {
     },
   ];
 
+  const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [shuffledTestimonials, setShuffledTestimonials] = useState(testimonials);
+
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        const properties = await getAllProperties();
+        const shuffled = properties.sort(() => 0.5 - Math.random());
+        setFeaturedProperties(shuffled.slice(0, 8));
+      } catch (error) {
+        console.error("Failed to fetch properties", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProperties();
+  }, []);
+
+  useEffect(() => {
+    setShuffledTestimonials(
+      [...testimonials].sort(() => 0.5 - Math.random()).slice(0, 4)
+    );
+  }, []);
+
   return (
     <div className="font-sans flex flex-col min-h-screen">
       {/* Hero Section */}
@@ -111,25 +118,22 @@ export default function Home() {
             What Our Guests Say
           </h2>
           <div className="flex justify-between gap-4 px-4">
-            {testimonials
-              .sort(() => 0.5 - Math.random())
-              .slice(0, 4)
-              .map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className="flex flex-col items-center bg-[#ffcedc9b] p-6 rounded-lg shadow-md w-full"
-                >
-                  <img
-                    src={testimonial.profilePic}
-                    alt={testimonial.name}
-                    className="w-16 h-16 rounded-full mb-4 border-4 border-white"
-                  />
-                  <h3 className="font-semibold text-lg text-center">
-                    {testimonial.name}
-                  </h3>
-                  <p className="text-gray-600 text-center">{testimonial.text}</p>
-                </div>
-              ))}
+            {shuffledTestimonials.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="flex flex-col items-center bg-[#ffcedc9b] p-6 rounded-lg shadow-md w-full"
+              >
+                <img
+                  src={testimonial.profilePic}
+                  alt={testimonial.name}
+                  className="w-16 h-16 rounded-full mb-4 border-4 border-white"
+                />
+                <h3 className="font-semibold text-lg text-center">
+                  {testimonial.name}
+                </h3>
+                <p className="text-gray-600 text-center">{testimonial.text}</p>
+              </div>
+            ))}
           </div>
         </section>
       </main>
