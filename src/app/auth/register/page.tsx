@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Input from "../../../components/Input";
 import Btn from "../../../components/Btn";
+import { login } from "../../api/auth";
+import { saveToken } from "../../../utils/auth";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.BACKEND_BASE_URL || 'http://localhost:1004';
 
@@ -46,10 +48,19 @@ const RegisterPage = () => {
 
             const data = await response.json();
 
-            if (role === "user") {
-                router.push("/bookings");
-            } else if (role === "host") {
-                router.push("/properties");
+            try {
+                const loginResponse = await login({ email, password });
+                saveToken(loginResponse.token); // Save the token
+                console.log("User logged in successfully:", loginResponse);
+
+                if (role === "user") {
+                    router.push("/bookings");
+                } else if (role === "host") {
+                    router.push("/properties");
+                }
+            } catch (loginError) {
+                console.error("Login after registration failed:", loginError);
+                setError("Registration succeeded, but login failed. Please log in manually.");
             }
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -105,8 +116,8 @@ const RegisterPage = () => {
                                 type="button"
                                 onClick={() => setRole("user")}
                                 className={`w-full border border-[#ffcedc] rounded-md px-4 py-2 text-center font-medium transition-colors ${role === "user"
-                                        ? "bg-[#ffcedc] text-pink-800"
-                                        : "bg-white text-black hover:bg-[#ffcedc] hover:text-pink-800"
+                                    ? "bg-[#ffcedc] text-pink-800"
+                                    : "bg-white text-black hover:bg-[#ffcedc] hover:text-pink-800"
                                     }`}
                             >
                                 User
@@ -115,8 +126,8 @@ const RegisterPage = () => {
                                 type="button"
                                 onClick={() => setRole("host")}
                                 className={`w-full border border-[#ffcedc] rounded-md px-4 py-2 text-center font-medium transition-colors ${role === "host"
-                                        ? "bg-[#ffcedc] text-pink-800"
-                                        : "bg-white text-black hover:bg-[#ffcedc] hover:text-pink-800"
+                                    ? "bg-[#ffcedc] text-pink-800"
+                                    : "bg-white text-black hover:bg-[#ffcedc] hover:text-pink-800"
                                     }`}
                             >
                                 Host
