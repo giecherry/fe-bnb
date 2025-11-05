@@ -2,20 +2,12 @@
 
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
-import { useEffect, useState } from "react";
-import { fetchUserRole } from "../app/api/auth";
+import { useUserContext } from "../context/UserContext";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-    const [role, setRole] = useState<string | null>("loading");
-    const pathname = usePathname(); 
-    useEffect(() => {
-        const getUserRole = async () => {
-            const fetchedRole = await fetchUserRole();
-            setRole(fetchedRole);
-        };
-        getUserRole();
-    }, []);
+    const { role } = useUserContext();
+    const pathname = usePathname();
 
     const isActive = (path: string) => pathname === path;
 

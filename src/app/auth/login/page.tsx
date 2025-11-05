@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "../../api/auth";
 import { saveToken } from "../../../utils/auth";
 import Input from "../../../components/Input";
 import Btn from "../../../components/Btn";
+import { useUserContext } from "../../../context/UserContext"; 
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
-
+    const { fetchAndSetRole } = useUserContext(); 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,6 +22,8 @@ const LoginPage: React.FC = () => {
         try {
             const response = await login({ email, password });
             saveToken(response.token);
+
+            await fetchAndSetRole();
 
             const { role } = response;
             if (role === "user") {

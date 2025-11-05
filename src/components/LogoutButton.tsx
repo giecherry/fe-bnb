@@ -2,12 +2,15 @@
 
 import { useRouter } from "next/navigation";
 import { removeToken } from "../utils/auth";
+import { useUserContext } from "../context/UserContext";
 
 export default function LogoutButton() {
     const router = useRouter();
+    const { clearRole } = useUserContext();
 
     const handleLogout = () => {
         removeToken();
+        clearRole();
         router.push("/"); 
     };
 

@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import "../app/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from "@/context/UserContext";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -39,19 +40,14 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} antialiased bg-pink-50 text-[#ff8faf]`}
       >
-        {/* Header */}
-        <Navbar />
-
-        {/* Main Content */}
-        <main className="min-h-[calc(100vh-160px)] bg-pink-50">
-          {children}
-        </main>
-
-        {/* Toast Notifications */}
-        <ToastContainer />
-
-        {/* Footer */}
-        <Footer />
+        <UserProvider>
+          <Navbar />
+          <main className="min-h-[calc(100vh-160px)] bg-pink-50">
+            {children}
+          </main>
+          <ToastContainer />
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );
