@@ -76,9 +76,14 @@ export default function Home() {
     <div className="font-sans flex flex-col min-h-screen">
       {/* Hero Section */}
       <main className="flex-grow flex flex-col items-center justify-center p-8 bg-pink-50">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Hembnb</h1>
-        <p className="text-lg text-gray-600 mb-8">
-          Discover and book unique homestays around the world.
+        <img
+          src="https://i.imgur.com/VIduwhI.png"
+          alt="Hembnb Logo"
+          className="w-200 h-auto p-1"
+          loading="lazy"
+        />
+        <p className="text-lg text-black-600 my-2">
+          - Beautiful places that feel like home -
         </p>
 
         {/* Featured Properties Section */}
@@ -107,11 +112,11 @@ export default function Home() {
         </div>
 
         {/* Testimonials Section */}
-        <section className="w-full bg-white py-12 rounded-lg">
+        <section className="w-full bg-white py-12 rounded-lg shadow-md mt-10">
           <h2 className="text-3xl font-bold text-center mb-8">
             What Our Guests Say
           </h2>
-          <div className="flex justify-between gap-4 px-4">
+          <div className="flex justify-between gap-4 px-10">
             {shuffledTestimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
@@ -129,6 +134,60 @@ export default function Home() {
                 <p className="text-gray-600 text-center">{testimonial.text}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Process Section */}
+        <section className="w-full bg-white py-12 rounded-lg shadow-md mt-10">
+          <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
+          <div className="flex flex-col md:flex-row justify-between gap-16 px-10">
+            {/* Card 1: Find */}
+            <div className="flex items-center bg-[#ffcedc9b] p-6 rounded-lg shadow-md w-full md:w-1/3">
+              <img
+                src="https://i.imgur.com/z0e4LmH.png"
+                alt="Find"
+                className="w-70 h-70 rounded-lg mr-4"
+                loading="lazy"
+              />
+              <div>
+                <h3 className="font-semibold text-lg">Find</h3>
+                <p className="text-gray-600">
+                  Discover unique properties that match your preferences.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Book */}
+            <div className="flex items-center bg-[#ffcedc9b] p-6 rounded-lg shadow-md w-full md:w-1/3">
+              <img
+                src="https://i.imgur.com/OnLhMhc.png"
+                alt="Book"
+                className="w-70 h-70 rounded-lg mr-4"
+                loading="lazy"
+              />
+              <div>
+                <h3 className="font-semibold text-lg">Book</h3>
+                <p className="text-gray-600">
+                  Secure your stay with our easy and reliable booking system.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 3: Stay */}
+            <div className="flex items-center bg-[#ffcedc9b] p-6 rounded-lg shadow-md w-full md:w-1/3">
+              <img
+                src="https://i.imgur.com/nMVhisn.png"
+                alt="Stay"
+                className="w-70 h-70 rounded-lg mr-4"
+                loading="lazy"
+              />
+              <div>
+                <h3 className="font-semibold text-lg">Stay</h3>
+                <p className="text-gray-600">
+                  Enjoy your stay with all the comforts of home.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </main>

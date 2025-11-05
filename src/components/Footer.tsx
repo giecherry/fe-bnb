@@ -4,15 +4,13 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-transparent text-black py-10 shadow-md shadow-t-md">
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+        <footer className="bg-transparent text-black py-8 shadow-md shadow-t-md">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-30 px-6">
                 {/* About Section */}
                 <div>
                     <h2 className="text-lg font-bold mb-4">About Hembnb</h2>
                     <p className="text-sm text-[#ff8faf]">
-                        Hembnb is your go-to platform for managing properties and bookings with
-                        ease. Whether you're a host or a guest, we make the process seamless
-                        and enjoyable.
+                        Hembnb is a booking platform made for women who care about comfort and design. We bring together soft, welcoming spaces that feel like home, wherever you are.
                     </p>
                 </div>
 

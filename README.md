@@ -47,7 +47,8 @@
 1. **Code Reusability**:
    - Refactor shared logic (e.g., API calls, form handling) into reusable hooks or utility functions.
    - Create shared components for common UI elements like modals, toasts, and form inputs.
-
+   - Expand the use of `UserContext` to manage global state for authentication, role-based access, and user-specific data.
+   
 2. **Dynamic Features**:
    - Add filters and sorting options for properties (e.g., by price, location, availability).
    - Allow admins to manage user roles dynamically (e.g., promote/demote users).

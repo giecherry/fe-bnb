@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>Hembnb</title>
-        <link rel="icon" href="https://i.imgur.com/eGjOPoQ.png" />
+        <link rel="icon" href="https://i.imgur.com/WTweqkg.png" />
         <link
           href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&display=swap"
           rel="stylesheet"
