@@ -2,9 +2,11 @@
 import Link from "next/link";
 import { getAllProperties } from "../app/api/properties";
 import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 
 export default function Home() {
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -14,6 +16,8 @@ export default function Home() {
         setFeaturedProperties(shuffled.slice(0, 8)); // Display 8 properties for a 4x8 grid
       } catch (error) {
         console.error("Failed to fetch properties", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -76,25 +80,29 @@ export default function Home() {
 
         {/* Featured Properties Section */}
         <div className="relative w-full flex flex-col items-center justify-center">
-          <div className="grid grid-cols-8 gap-4 py-4 group relative">
-            {featuredProperties
-              .flatMap((property) => property.images)
-              .slice(0, 32)
-              .map((image, index) => (
-                <Link
-                  key={index}
-                  href={`/properties/${featuredProperties[Math.floor(index / featuredProperties.length)].id}`}
-                >
-                  <div className="relative bg-white shadow-lg cursor-pointer transition-transform duration-200 rounded-lg hover:scale-125 overflow-visible hover:z-10">
-                    <img
-                      src={image || "https://placehold.co/600x400"}
-                      alt={`Property Image ${index + 1}`}
-                      className="w-full h-32 object-cover group-hover:blur-[1px] hover:blur-none rounded-lg"
-                    />
-                  </div>
-                </Link>
-              ))}
-          </div>
+          {loading ? (
+            <Loading message="Fetching properties..." />
+          ) : (
+            <div className="grid grid-cols-8 gap-4 py-4 group relative">
+              {featuredProperties
+                .flatMap((property) => property.images)
+                .slice(0, 32)
+                .map((image, index) => (
+                  <Link
+                    key={index}
+                    href={`/properties/${featuredProperties[Math.floor(index / featuredProperties.length)].id}`}
+                  >
+                    <div className="relative bg-white shadow-lg cursor-pointer transition-transform duration-200 rounded-lg hover:scale-125 overflow-visible hover:z-10">
+                      <img
+                        src={image || "https://placehold.co/600x400"}
+                        alt={`Property Image ${index + 1}`}
+                        className="w-full h-32 object-cover group-hover:blur-[1px] hover:blur-none rounded-lg"
+                      />
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          )}
         </div>
 
         {/* Testimonials Section */}

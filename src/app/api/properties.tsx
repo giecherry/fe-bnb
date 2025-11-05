@@ -1,9 +1,21 @@
 import { apiRequest } from "../../utils/auth";
 
-const API_URL = process.env.BACKEND_BASE_URL || "http://localhost:1004";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || process.env.BACKEND_BASE_URL || 'http://localhost:1004';
+
 
 export const getAllProperties = async (): Promise<Property[]> => {
-    const response = await apiRequest(`${API_URL}/properties`);
+    const response = await fetch(`${API_URL}/properties`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch properties");
+    }
+
     return response.json();
 };
 
