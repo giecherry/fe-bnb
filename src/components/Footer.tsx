@@ -5,9 +5,9 @@ export default function Footer() {
 
     return (
         <footer className="bg-transparent text-black py-8 shadow-md shadow-t-md">
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-30 px-6">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-6">
                 {/* About Section */}
-                <div>
+                <div className="text-center md:text-left">
                     <h2 className="text-lg font-bold mb-4">About Hembnb</h2>
                     <p className="text-sm text-[#ff8faf]">
                         Hembnb is a booking platform made for women who care about comfort and design. We bring together soft, welcoming spaces that feel like home, wherever you are.
@@ -15,7 +15,7 @@ export default function Footer() {
                 </div>
 
                 {/* Quick Links */}
-                <div>
+                <div className="text-center md:text-left">
                     <h2 className="text-lg font-bold mb-4">Quick Links</h2>
                     <ul className="space-y-2">
                         <li>
@@ -54,9 +54,9 @@ export default function Footer() {
                 </div>
 
                 {/* Social Media */}
-                <div>
+                <div className="text-center md:text-left">
                     <h2 className="text-lg font-bold mb-4">Follow Us</h2>
-                    <ul className="flex space-x-4">
+                    <ul className="flex justify-center md:justify-start space-x-4">
                         <li>
                             <a
                                 href="#"
